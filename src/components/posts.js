@@ -11,12 +11,24 @@ import '../styles/posts.css'
 class PostsIndex extends Component {
   constructor(props) {
     super(props)
-
-    this.onPaginationClick = this.onPaginationClick.bind(this)
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', this.onScroll, false);
     this.props.fetchPosts()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
+
+  onScroll = () => {
+    if (
+      (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+      this.props.next
+    ) {
+      this.props.fetchPosts(this.props.next)
+    }
   }
 
   renderCategories(categories) {
@@ -67,17 +79,11 @@ class PostsIndex extends Component {
     return (
       <div className="posts">
         {this.renderPosts()}
-        <div className="has-text-centered">
+        {/* <div className="has-text-centered">
           <a className="button" disabled={!this.props.next} onClick={(e) => this.onPaginationClick(e, this.props.next)}>Newer Posts</a>
-        </div>
+        </div> */}
       </div>
     )
-  }
-
-  onPaginationClick(e, url) {
-    if (url) {
-      this.props.fetchPosts(url)
-    }
   }
 }
 
