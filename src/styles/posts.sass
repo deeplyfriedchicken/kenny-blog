@@ -3,3 +3,31 @@ span.categories a:after
 
 span.categories a:last-child:after
   content: ""
+
+.fa-spin
+  font-size: 5em
+  -webkit-animation: fa-spin 2s infinite linear
+  animation: fa-spin 2s infinite linear
+
+.fa-pulse
+  -webkit-animation: fa-spin 1s infinite steps(8)
+  animation: fa-spin 1s infinite steps(8)
+
+@-webkit-keyframes fa-spin
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  100%
+    -webkit-transform: rotate(359deg)
+    transform: rotate(359deg)
+
+
+@keyframes fa-spin
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  100%
+    -webkit-transform: rotate(359deg)
+    transform: rotate(359deg)

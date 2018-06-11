@@ -11,11 +11,13 @@ import '../styles/posts.css'
 class PostsIndex extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {isLoading: true}
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll, false);
-    this.props.fetchPosts()
+    this.fetchMorePosts()
   }
 
   componentWillUnmount() {
@@ -23,12 +25,20 @@ class PostsIndex extends Component {
   }
 
   onScroll = () => {
-    if (
-      (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
-      this.props.next
-    ) {
-      this.props.fetchPosts(this.props.next)
+    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+      this.props.next && !this.state.isLoading) {
+      this.setState({ isLoading: true })
+      setTimeout(() => {
+        this.fetchMorePosts()
+      }, 1000)
+      
     }
+  }
+
+  fetchMorePosts() {
+    this.props.fetchPosts(this.props.next).then(() => {
+      this.setState({ isLoading: false })
+    })
   }
 
   renderCategories(categories) {
@@ -75,13 +85,19 @@ class PostsIndex extends Component {
     })
   }
 
+  renderLoading(loading) {
+    if (loading) {
+      return (
+        <div className="has-text-centered"><i className="fa-spin fas fa-spinner"></i></div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="posts">
         {this.renderPosts()}
-        {/* <div className="has-text-centered">
-          <a className="button" disabled={!this.props.next} onClick={(e) => this.onPaginationClick(e, this.props.next)}>Newer Posts</a>
-        </div> */}
+        {this.renderLoading(this.state.isLoading)}
       </div>
     )
   }
