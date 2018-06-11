@@ -1,0 +1,35 @@
+// The container horizontal gap, which acts as the offset for breakpoints
+$gap: 32px !default
+$tiny: 400px !default
+// 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
+$tablet: 769px !default
+// 960px container + 3rem
+$desktop: 960px + (2 * $gap) !default
+// 1152px container + 3rem
+$widescreen: 1216px + (2 * $gap)  !default
+// 1344px container + 3rem
+$fullhd: 1408px + (2 * $gap)  !default
+
+=tiny
+  @media screen and (max-width: $tiny - 1px)
+    @content
+
+=mobile
+  @media screen and (min-width: $tiny) and (max-width: $tablet - 1)
+    @content
+
+=tablet
+  @media screen and (min-width: $tablet), print
+    @content
+
+=tablet-only
+  @media screen and (min-width: $tablet) and (max-width: $desktop - 1px)
+    @content
+
+=desktop
+  @media screen and (min-width: $desktop)
+    @content
+
+=desktop-only
+  @media screen and (min-width: $desktop) and (max-width: $widescreen - 1px)
+    @content
