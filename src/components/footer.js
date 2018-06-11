@@ -11,7 +11,7 @@ class Footer extends Component {
               <i className="fab fa-github"></i>
             </span>
           </a>
-          <p>template by <a href="http://github.com/plasticneko">github.com/plasticneko</a></p>
+          <p>engineered by <a href="https://github.com/kcunanan/kenny-blog">kcunanan</a></p>
         </div>
       </div>
     )
