@@ -1,56 +1,63 @@
-import _ from 'lodash'
-import React , { Component } from 'react'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchPosts } from '../actions/index'
+import { fetchPosts, fetchMorePosts } from '../actions/index'
 
 import Moment from 'react-moment'
 
 import '../styles/posts.css'
 
-
-class PostsIndex extends Component {
-  constructor(props) {
+class Posts extends Component {
+  constructor (props) {
     super(props)
 
-    this.state = {isLoading: true}
+    this.state = {
+      isLoading: true
+    }
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.onScroll, false);
-    this.fetchMorePosts()
+  componentDidMount () {
+    window.addEventListener('scroll', this.onScroll, false)
+    this.fetchPosts()
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, false);
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.onScroll, false)
   }
 
-  onScroll = () => {
+  onScroll () {
     if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
       this.props.next && !this.state.isLoading) {
       this.setState({ isLoading: true })
       setTimeout(() => {
-        this.fetchMorePosts()
+        this.fetchMorePosts(this.props.next)
       }, 1000)
-      
     }
   }
 
-  fetchMorePosts() {
-    this.props.fetchPosts(this.props.next).then(() => {
+  fetchPosts () {
+    this.props.fetchPosts(this.props.url).then(() => {
       this.setState({ isLoading: false })
     })
   }
 
-  renderCategories(categories) {
-    return _.map(categories, category => {
+  fetchMorePosts (next) {
+    console.log(next)
+    this.props.fetchMorePosts(next).then(() => {
+      this.setState({ isLoading: false })
+    })
+  }
+
+  renderCategories (categories) {
+    return categories.map(category => {
       return (
-        <a key={category}>{category}</a>
+        <Link key={category} to={`/category/${category}`}>{category}</Link>
       )
     })
   }
 
-  renderPosts() {
-    return _.map(this.props.posts, post => {
+  renderPosts () {
+    return this.props.posts.map(post => {
       return (
         <div key={post.id}>
           <div className="header-content">
@@ -59,7 +66,7 @@ class PostsIndex extends Component {
                 {post.title}
               </h1>
             </div>
-          </div>	    
+          </div>
           <img src={post.thumbnail} />
           <div className="subheader-content has-text-centered">
             <p>
@@ -77,7 +84,7 @@ class PostsIndex extends Component {
           <div className="content">
             <div dangerouslySetInnerHTML={{__html: post.description}} />
             <div className="has-text-centered">
-              <p><a className="button" href={post.link} target="_blank">Continue Reading</a></p>
+              <p><a className="button" href={post.link} rel="noopener noreferrer" target="_blank">Continue Reading</a></p>
             </div>
           </div>
         </div>
@@ -85,7 +92,7 @@ class PostsIndex extends Component {
     })
   }
 
-  renderLoading(loading) {
+  renderLoading (loading) {
     if (loading) {
       return (
         <div className="has-text-centered"><i className="fa-spin fas fa-spinner"></i></div>
@@ -93,7 +100,7 @@ class PostsIndex extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <div className="posts">
         {this.renderPosts()}
@@ -103,12 +110,11 @@ class PostsIndex extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { 
-    posts: state.posts.posts,
-    next: state.posts.next,
-    prev: state.posts.prev
+function mapStateToProps (state) {
+  return {
+    posts: state.posts,
+    next: state.next
   }
 }
 
-export default connect(mapStateToProps, { fetchPosts })(PostsIndex)
+export default connect(mapStateToProps, { fetchPosts, fetchMorePosts })(Posts)

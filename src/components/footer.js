@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 class Footer extends Component {
-  render() {
+  render () {
     return (
       <div className="hero-foot footer-custom">
         <div className="container has-text-centered">
