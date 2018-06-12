@@ -6,36 +6,37 @@
 
 // 2. Set your own initial variables
 // Update blue
-$blue: #72d0eb;
+$blue: #72d0eb
 // Add pink and its invert
-$pink: #ffb3b3;
-$pink-invert: #fff;
+$pink: #ff3860
+$pink-invert: #fff
 // Add a serif family
 $family-serif: Helvetica, "Arial", sans-serif !default
 
 // // 3. Set the derived variables
 // $body-size: 1.25rem
 // Use the new pink as the primary color
-$primary: $pink;
-$primary-invert: $pink-invert;
+$primary: $pink !default
+$primary-invert: $pink-invert
 // Use the existing orange as the danger color
-$danger: $orange;
-$link: #cc181e !default
+$danger: orange !default
+$link: #ff3860 !default
+$link-hover: black !default
 $warning: #ffdb00 !default
 $secondary: #036299 !default
 $tertiary: #1AA6B7 !default
 $fourth: #022D41 !default
 
 // Use the new serif family
-$family-primary: $family-serif;
+$family-primary: $family-serif
 
 // 4. Setup your Custom Colors
-$linkedin: #0077b5;
-$linkedin-invert: findColorInvert($linkedin);
-$twitter: #55acee;
-$twitter-invert: findColorInvert($twitter);
-$github: #333;
-$github-invert: findColorInvert($github);
+$linkedin: #0077b5
+$linkedin-invert: findColorInvert($linkedin)
+$twitter: #55acee
+$twitter-invert: findColorInvert($twitter)
+$github: #333
+$github-invert: findColorInvert($github)
 
 // 6. Import the rest of Bulma
 @import 'bulma/bulma'

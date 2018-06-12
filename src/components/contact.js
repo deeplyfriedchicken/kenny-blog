@@ -51,13 +51,10 @@ class Contact extends Component {
                 <button className="button is-danger">Send</button>
               </p>
               <p className="control">
-                <button className="button is-link">Clear</button>
+                <button className="button is-primary">Clear</button>
               </p>
             </div>
           </form>
-        </div>
-        <div className="has-text-right">
-          <p><a className="button" href="index.html">Back to Home</a></p>
         </div>
       </div>
     )

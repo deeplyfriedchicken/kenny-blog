@@ -19,13 +19,14 @@ class Posts extends Component {
   componentDidMount () {
     window.addEventListener('scroll', this.onScroll, false)
     this.fetchPosts()
+    window.scrollTo(0, 0)
   }
 
   componentWillUnmount () {
     window.removeEventListener('scroll', this.onScroll, false)
   }
 
-  onScroll () {
+  onScroll = () => {
     if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
       this.props.next && !this.state.isLoading) {
       this.setState({ isLoading: true })
@@ -42,12 +43,16 @@ class Posts extends Component {
   }
 
   fetchMorePosts (next) {
-    console.log(next)
     this.props.fetchMorePosts(next).then(() => {
       this.setState({ isLoading: false })
     })
   }
 
+  renderInSpan (length) {
+    if (length > 0) {
+      return <span> in </span>
+    }
+  }
   renderCategories (categories) {
     return categories.map(category => {
       return (
@@ -74,10 +79,10 @@ class Posts extends Component {
               <a>
                 <Moment fromNow parse="YYYY-MM-DD HH:mm:ss">{post.pub_date}</Moment>
               </a>
-              <span> in </span>
+              {this.renderInSpan(post.categories.length)}
               <span className="categories">{this.renderCategories(post.categories)}</span>
               <span> from </span>
-              <a>{post.account}</a></p>
+              <Link to={`/account/${post.account}`}>{post.account}</Link></p>
             <hr/>
           </div>
 

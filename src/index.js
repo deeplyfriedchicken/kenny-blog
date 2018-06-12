@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux'
 import promise from 'redux-promise'
 import { BrowserRouter } from 'react-router-dom'
 
-import App from './App';
+import App from './App'
 
 import reducers from './reducers'
 
